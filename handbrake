@@ -49,12 +49,12 @@ transcode() {
 	OP="$OP --all-subtitles"
 
 	### Show time!
-	HandBrakeCLI -i "${inputPath}"/"${fileName}" --main-feature -o "${outputPath}"/"${fileName}".mp4 "$OP"
+	HandBrakeCLI -i "${inputPath}"/"${fileName}"/"VIDEO_TS" --main-feature -o "${outputPath}"/"${fileName}".mp4 "$OP"
 }
 
-for line in $( ls $inputPath ); do
+for line in $( ls $inputPath | tr ' ' '_' | tr '/' '_' ); do
 	#statements
-	fileName=$( echo $line | tr ' ' '_' | tr '/' '_')
+	fileName=$( echo $line )
 	transcode "$fileName" "$inputPath" "$outputPath"
 done
 
