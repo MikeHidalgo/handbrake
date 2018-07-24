@@ -13,10 +13,10 @@ inputPath=$1
 outputPath=$2
 
 transcode() {
-	args
-	  : string fileName
-	  : string inputPath
-	  : string outputPath
+
+	fileName=$1
+	inputPath=$2
+	outputPath=$3
 
 	echo "Working on ${fileName}"
 
@@ -55,6 +55,6 @@ transcode() {
 for line in $( ls $inputPath ); do
 	#statements
 	fileName=$( echo $line | tr ' ' '_' | tr '/' '_')
-	transcode $fileName $inputPath $outputPath
+	transcode "$fileName" "$inputPath" "$outputPath"
 done
 
