@@ -9,12 +9,16 @@
 # http://www.thewebernets.com/2015/02/28/easiest-best-optimal-settings-for-handbrake-dvd-video-conversion-on-mac-windows-and-linux/
 #
 
-filePath=$1
-fileName=$( echo $filePath | tr ' ' '_' | tr '/' '_')
+inputPath=$1
+outputPath=$2
 
 transcode() {
+	args
+	  : string fileName
+	  : string inputPath
+	  : string outputPath
 
-	echo "Working on $filePath"
+	echo "Working on ${fileName}"
 
 	########### OPTIONS EXPLAINED
 	#
@@ -45,7 +49,12 @@ transcode() {
 	OP="$OP --all-subtitles"
 
 	### Show time!
-	HandBrakeCLI -i "$filePath" --main-feature -o "$fileName.mp4" "$OP"
+	HandBrakeCLI -i "${inputPath}"/"${fileName}" --main-feature -o "${outputPath}"/"${fileName}".mp4 "$OP"
 }
 
-transcode
+for line in $( ls $inputPath ); do
+	#statements
+	fileName=$( echo $line | tr ' ' '_' | tr '/' '_')
+	transcode $fileName $inputPath $outputPath
+done
+
